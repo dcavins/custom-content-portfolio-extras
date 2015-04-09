@@ -12,9 +12,20 @@
 /**
  * Prints HTML with meta information for the project client.
  */
-function cares_project_client( $post_id = null ) {
-	$post_id = ( $post_id ) ? $post_id : get_the_ID();
-	$client = get_post_meta(  $post_id, 'portfolio_item_client', true );
+if ( !( function_exists('cares_project_client') ) ) {
+	function cares_project_client( $post_id = null ) {
+		$post_id = ( $post_id ) ? $post_id : get_the_ID();
+		$client = get_post_meta(  $post_id, 'portfolio_item_client', true );
+		return $client;
+		//return apply_filters( 'the_title', $client );
+	}
+}
 
-	echo apply_filters( 'the_title', $client );
+if ( !( function_exists('cares_project_url') ) ) {
+	function cares_project_url( $post_id = null ) {
+		$post_id = ( $post_id ) ? $post_id : get_the_ID();
+		$url = get_post_meta(  $post_id, 'portfolio_item_url', true );
+
+		return apply_filters( 'the_title', $url );
+	}
 }

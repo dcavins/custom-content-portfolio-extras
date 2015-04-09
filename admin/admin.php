@@ -49,9 +49,9 @@ function ccpe_admin_setup() {
 function ccpe_edit_portfolio_item_columns( $columns ) {
 
 	$new_columns = array(
-		'featured' => __( 'Featured', 'custom-content-portfolio-extras' )
+		'featured' => __( 'Featured', 'custom-content-portfolio-extras' ),
+		'sticky' => __( 'Sticky', 'custom-content-portfolio-extras' )
 	);
-
 
 	return array_merge( $new_columns, $columns );
 }
@@ -72,6 +72,10 @@ function ccpe_manage_portfolio_item_columns( $column, $post_id ) {
 
 		case 'featured' :
 			echo get_post_meta( $post_id, 'portfolio_item_feature', true );
+			break;
+			
+		case 'sticky' :
+			echo get_post_meta( $post_id, 'portfolio_item_sticky', true );
 			break;
 
 		/* Just break out of the switch statement for everything else. */
@@ -95,7 +99,12 @@ function ccpe_render_meta_box_extras( $post, $metabox ) {
 
 		<div style="margin-top:1em;">
 			<input type="checkbox" name="ccp-portfolio-featured" id="ccp-portfolio-featured" value="1" <?php checked( get_post_meta( $post->ID, 'portfolio_item_feature', true ), 'yes' ); ?> />
-			<label for="ccp-portfolio-featured" ><?php _e( 'Featured', 'custom-content-portfolio-extras' ); ?></label>
+			<label for="ccp-portfolio-featured" ><?php _e( 'Featured - top of home page', 'custom-content-portfolio-extras' ); ?></label>
+		</div>
+		
+		<div style="margin-top:1em;">
+			<input type="checkbox" name="ccp-portfolio-sticky" id="ccp-portfolio-sticky" value="1" <?php checked( get_post_meta( $post->ID, 'portfolio_item_sticky', true ), 'yes' ); ?> />
+			<label for="ccp-portfolio-sticky" ><?php _e( 'Sticky - stays at top of Recent Posts on Homepage', 'custom-content-portfolio-extras' ); ?></label>
 		</div>
 
 	<?php
@@ -118,6 +127,7 @@ function ccpe_portfolio_item_info_meta_box_save( $post_id, $post ) {
 	$meta = array(
 		'portfolio_item_client' => $_POST['ccp-portfolio-client'],
 		'portfolio_item_feature' => isset( $_POST['ccp-portfolio-featured'] ) ? 'yes' : 'no', // We can't use true/false for this value because we want to be able to sort by it, and WP won't include value=false in an orderby
+		'portfolio_item_sticky' => isset( $_POST['ccp-portfolio-sticky'] ) ? 'yes' : 'no', // We can't use true/false for this value because we want to be able to sort by it, and WP won't include value=false in an orderby
 	);
 
 	foreach ( $meta as $meta_key => $new_meta_value ) {
