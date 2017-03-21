@@ -13,7 +13,7 @@
 add_action( 'init', 'ccpe_register_meta' );
 
 /**
- * Registers custom metadata for the plugin. Defined at wp-includes/meta.php, line 1170 
+ * Registers custom metadata for the plugin. Defined at wp-includes/meta.php, line 1170
  *
  * @since  0.1.0
  * @access public
@@ -21,13 +21,12 @@ add_action( 'init', 'ccpe_register_meta' );
  */
 function ccpe_register_meta() {
 	// Third argument is a sanitization callback.
-	register_meta( 'post', 'portfolio_item_client', 'ccpe_sanitize_meta' );
-	register_meta( 'post', 'portfolio_item_featured', 'ccpe_sanitize_meta' );
+	register_meta( 'post', 'feature', 'sanitize_key' );
 }
 
 /**
- * Callback function for sanitizing meta when add_metadata() or update_metadata() is called by WordPress. 
- * If a developer wants to set up a custom method for sanitizing the data, they should use the 
+ * Callback function for sanitizing meta when add_metadata() or update_metadata() is called by WordPress.
+ * If a developer wants to set up a custom method for sanitizing the data, they should use the
  * "sanitize_{$meta_type}_meta_{$meta_key}" filter hook to do so.
  *
  * @since  0.1.0
